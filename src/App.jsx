@@ -112,7 +112,20 @@ const App = (props) => {
                     </div>
                 </Grid>
                 <Grid item>
-                  <NearbyRestaurants></NearbyRestaurants>
+                  <NearbyRestaurants>
+                    {nearbyRestaurants.map((select, index) => {
+                      return <Grid item key = {index}>
+                        <RestaurantItem
+                          Name = {select.restaurant.name}
+                          Cuisine = {select.restaurant.cuisines}
+                          Address = {select.restaurant.location.address}
+                          Price = {select.restaurant.price_range}
+                        />
+
+                      </Grid>
+
+                    })}
+                  </NearbyRestaurants>
                 </Grid>
             </Grid>
           </Grid>
