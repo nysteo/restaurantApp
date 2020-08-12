@@ -2,6 +2,8 @@ import React, {useEffect, useState} from 'react';
 import {ThemeProvider, createMuiTheme, responsiveFontSizes, Typography, Grid, Fade, Button, makeStyles, Box} from '@material-ui/core'
 import logo from './logo.svg';
 import './App.css';
+import NearbyRestaurants from 'components/NearbyRestaurants';
+import RestaurantItem from 'components/RestaurantItem';
 
 const contrastText = '#2C3C56';
 let theme = createMuiTheme({
@@ -108,6 +110,9 @@ const App = (props) => {
                         <Typography variant='h6'><Box fontWeight='bold'>Restaurant Finder App</Box></Typography>
                         <Typography variant='subtitle2' style={{opacity: '0.7'}}>Current Location: {userLocation} </Typography>
                     </div>
+                </Grid>
+                <Grid item>
+                  <NearbyRestaurants></NearbyRestaurants>
                 </Grid>
             </Grid>
           </Grid>
