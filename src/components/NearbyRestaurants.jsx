@@ -1,5 +1,5 @@
 import React from 'react';
-import {Grid, Typography, makeStyles, Box, Link} from '@material-ui/core';
+import {Grid, Typography, makeStyles, Box, Link, GridList} from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -18,9 +18,13 @@ const useStyles = makeStyles((theme) => ({
 
 const NearbyRestaurants = (props) => {
     const classes = useStyles();
-    return <Grid container className={classes.container} justify='center' direction='column' alignItems='stretch' alignContent='stretch'>
+    return (
+    <Grid container className={classes.container} direction='row'>
         <Grid item><Typography variant='h6' className={classes.label}><Box fontWeight='bold'>Nearby Restaurants</Box></Typography></Grid>
-        <Grid item>{props.children}</Grid>
-    </Grid>;
+        <GridList cols = {4} spacing = {10} cellHeight = 'auto'>
+            {props.children}
+        </GridList>
+    </Grid>
+    )
 };
 export default NearbyRestaurants;

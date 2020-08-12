@@ -72,11 +72,7 @@ const App = (props) => {
   const [userLocation, setUserLocation] = useState('unknown');
   const [nearbyRestaurants, setNearbyRestaurants] = useState([]);
 
- 
-    
 
-    
-  
   useEffect(()=> {
     navigator.geolocation.getCurrentPosition(function(position) {
       setLat(position.coords.latitude);
@@ -120,6 +116,7 @@ const App = (props) => {
                           Cuisine = {select.restaurant.cuisines}
                           Address = {select.restaurant.location.address}
                           Price = {select.restaurant.price_range}
+                          Image = {select.restaurant.featured_imageA}
                         />
 
                       </Grid>

@@ -1,5 +1,6 @@
 import React from 'react';
 import {Grid, Typography, makeStyles, Button, Box, Link} from '@material-ui/core';
+import {Card, CardHeader, CardMedia, CardContent, CardActions, Avatar, IconButton} from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -8,6 +9,9 @@ const useStyles = makeStyles((theme) => ({
         padding: '1rem',
         marginBottom: '.8rem',
     },
+    root: {
+        maxWidth: 345,
+    }
 }));
 
 
@@ -15,13 +19,26 @@ const RestaurantItem = (props) => {
     const classes = useStyles();
 
     return (
-        <Grid container direction = 'row' alignItems = 'Center' justify = 'space-around' className =  {classes.container}>
-            <Grid item><Typography><Box fontWeight = 'bold'>{props.Name}</Box></Typography></Grid>
-            <Grid item><Typography><Box fontWeight = 'bold'>{props.Cuisine}</Box></Typography></Grid>
-            <Grid item><Typography><Box fontWeight = 'bold'>{props.Adress}</Box></Typography></Grid>
-            <Grid item><Typography><Box fontWeight = 'bold'>{props.Price}</Box></Typography></Grid>
-            
-        </Grid>
+        <Card className={classes.root}>
+            <CardHeader
+            title= {props.Name}
+            subheader= {props.Cuisine}
+            />
+            <CardMedia
+                className={classes.media}
+                image= {props.Image}
+                title="Paella dish"
+            />
+            <CardContent>
+                <Typography variant="body2" color="textSecondary" component="p">
+                    Address: {props.Address}
+                </Typography>
+                <Typography variant="body2" color="textSecondary" component="p">
+                    Price: {props.Price}
+                </Typography>
+
+            </CardContent>
+        </Card>
     )
 }
 
