@@ -116,7 +116,7 @@ const App = (props) => {
                           Cuisine = {select.restaurant.cuisines}
                           Address = {select.restaurant.location.address}
                           Price = {select.restaurant.price_range}
-                          Image = {select.restaurant.featured_imageA}
+                          Image = {select.restaurant.featured_image}
                         />
 
                       </Grid>

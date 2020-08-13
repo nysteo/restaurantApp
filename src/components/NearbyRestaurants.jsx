@@ -4,7 +4,7 @@ import {Grid, Typography, makeStyles, Box, Link, GridList} from '@material-ui/co
 const useStyles = makeStyles((theme) => ({
     container: {
         borderRadius: '4px',
-        background: '#fff',
+        // background: '#fff',
         padding: '1rem',
         boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)',
     },

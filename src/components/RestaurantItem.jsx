@@ -11,12 +11,18 @@ const useStyles = makeStyles((theme) => ({
     },
     root: {
         maxWidth: 345,
+    },
+    media: {
+        height: '100px',
+        width: '345px',
     }
+
 }));
 
 
 const RestaurantItem = (props) => {
     const classes = useStyles();
+    console.log(props.Image);
 
     return (
         <Card className={classes.root}>
@@ -24,11 +30,8 @@ const RestaurantItem = (props) => {
             title= {props.Name}
             subheader= {props.Cuisine}
             />
-            <CardMedia
-                className={classes.media}
-                image= {props.Image}
-                title="Paella dish"
-            />
+            <CardMedia className = {classes.media} square image ={props.Image} />
+ 
             <CardContent>
                 <Typography variant="body2" color="textSecondary" component="p">
                     Address: {props.Address}
