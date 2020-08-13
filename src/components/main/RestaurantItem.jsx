@@ -1,6 +1,7 @@
 import React from 'react';
 import {Grid, Typography, makeStyles, Button, Box, Link} from '@material-ui/core';
 import {Card, CardHeader, CardMedia, CardContent, CardActions, Avatar, IconButton} from '@material-ui/core';
+import Divider from '@material-ui/core/Divider';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -22,6 +23,7 @@ const RestaurantItem = (props) => {
         <Grid  className = {classes.root} container  direction = 'column' spacing = {50}>
             <Grid Item ><img className = {classes.media} src = {props.Image}/></Grid>
             <Grid Item><Typography variant = 'h6'><Box fontWeight = 'bold'> {props.Name} ({props.Address})</Box></Typography></Grid>
+            <Divider/> 
             <Grid Item>  {props.Cuisine} - Price: {props.Price == 1 && ' $'}{props.Price == 2 && ' $$'}{props.Price == 3 && ' $$$'}{props.Price == 4 && ' $$$'}</Grid>
         </Grid>
     )

@@ -2,9 +2,11 @@ import React, {useEffect, useState} from 'react';
 import {ThemeProvider, createMuiTheme, responsiveFontSizes, Typography, Grid, Fade, Button, makeStyles, Box} from '@material-ui/core'
 import logo from './logo.svg';
 import './App.css';
-import NearbyRestaurants from 'components/NearbyRestaurants';
-import RestaurantItem from 'components/RestaurantItem';
-import RestaurantSearch from 'components/RestaurantSearch';
+import RestaurantPage from 'pages/RestaurantPage';
+import NearbyRestaurants from 'components/main/NearbyRestaurants';
+import RestaurantItem from 'components/main/RestaurantItem';
+import RestaurantSearch from 'components/main/RestaurantSearch';
+import history from './history';
 
 
 
@@ -75,6 +77,8 @@ const App = (props) => {
   const [nearbyRestaurants, setNearbyRestaurants] = useState([]);
   const [render, setRender] = useState(0);
   const [isSearched, setIsSearched] = useState(false);
+  const [redirect, setRedirect] = useState(null);
+  const [selectedResID, setSelectedResID] = useState(null);
 
   const [text, setText] = useState('');
 
@@ -96,8 +100,6 @@ const App = (props) => {
       });
 
   }
-
-
 
   useEffect(()=> {
     navigator.geolocation.getCurrentPosition(function(position) {
@@ -139,13 +141,19 @@ const App = (props) => {
                 <Grid item>
                   <NearbyRestaurants>
                     {nearbyRestaurants.slice(0, 9).map((select, index) => {
-                      return <Grid item key = {index}>
+                      return <Grid item key = {index} onClick={() => history.push({
+                        pathname: '/RestaurantPage',
+                        data: select.restaurant.R.res_id,
+                        userLat: userLat,
+                        userLon: userLon,
+                      })}>
                         <RestaurantItem
                           Name = {select.restaurant.name}
                           Cuisine = {select.restaurant.cuisines}
                           Address = {select.restaurant.location.address}
                           Price = {select.restaurant.price_range}
                           Image = {select.restaurant.featured_image}
+                          resID = {select.restaurant.R.res_id}
                         />
 
                       </Grid>
@@ -161,8 +169,11 @@ const App = (props) => {
         </Grid>
       </div>
     </Fade>
+  
+    );
 
-  );
+  
+  
 }
 
 export default App;
