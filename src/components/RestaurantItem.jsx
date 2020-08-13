@@ -3,18 +3,12 @@ import {Grid, Typography, makeStyles, Button, Box, Link} from '@material-ui/core
 import {Card, CardHeader, CardMedia, CardContent, CardActions, Avatar, IconButton} from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
-    container: {
-        borderRadius: '4px',
-        background: '#F2F6F9',
-        padding: '1rem',
-        marginBottom: '.8rem',
-    },
     root: {
-        maxWidth: 345,
+        cursor: 'pointer',
     },
     media: {
-        height: '100px',
-        width: '345px',
+        height: '200px',
+        width: '450px',
     }
 
 }));
@@ -25,23 +19,11 @@ const RestaurantItem = (props) => {
     console.log(props.Image);
 
     return (
-        <Card className={classes.root}>
-            <CardHeader
-            title= {props.Name}
-            subheader= {props.Cuisine}
-            />
-            <CardMedia className = {classes.media} square image ={props.Image} />
- 
-            <CardContent>
-                <Typography variant="body2" color="textSecondary" component="p">
-                    Address: {props.Address}
-                </Typography>
-                <Typography variant="body2" color="textSecondary" component="p">
-                    Price: {props.Price}
-                </Typography>
-
-            </CardContent>
-        </Card>
+        <Grid  className = {classes.root} container  direction = 'column' spacing = {50}>
+            <Grid Item ><img className = {classes.media} src = {props.Image}/></Grid>
+            <Grid Item><Typography variant = 'h6'><Box fontWeight = 'bold'> {props.Name} ({props.Address})</Box></Typography></Grid>
+            <Grid Item>  {props.Cuisine} - Price: {props.Price == 1 && ' $'}{props.Price == 2 && ' $$'}{props.Price == 3 && ' $$$'}{props.Price == 4 && ' $$$'}</Grid>
+        </Grid>
     )
 }
 

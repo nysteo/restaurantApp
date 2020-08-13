@@ -4,7 +4,11 @@ import logo from './logo.svg';
 import './App.css';
 import NearbyRestaurants from 'components/NearbyRestaurants';
 import RestaurantItem from 'components/RestaurantItem';
+import RestaurantSearch from 'components/RestaurantSearch';
 
+
+
+//Set up theme for Styling
 const contrastText = '#2C3C56';
 let theme = createMuiTheme({
     palette: {
@@ -49,8 +53,6 @@ theme = responsiveFontSizes(theme);
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    background: '#EBEFF2',
-    height: '100vh',
   },
   greetingsContainer: {
     boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)',
@@ -71,6 +73,30 @@ const App = (props) => {
   const [userLon, setLon] = useState(-73.8492416);
   const [userLocation, setUserLocation] = useState('unknown');
   const [nearbyRestaurants, setNearbyRestaurants] = useState([]);
+  const [render, setRender] = useState(0);
+  const [isSearched, setIsSearched] = useState(false);
+
+  const [text, setText] = useState('');
+
+  const incrstate = (inputValue) => {
+    setRender(render + 1);
+    console.log(inputValue);
+    fetch(`${apiLink}/search?q=${inputValue}&lat=${userLat}&lon=${userLon}`, {
+      method: 'GET',
+      headers: {
+          'Accept': 'application/json',
+          'user-key': '6a14e6f5ec6a7ff2475989f5ba2b27e9',
+      }})
+      .then((res) => res.json())
+      .then((res) => {
+        setNearbyRestaurants(res.restaurants);
+      },
+      (error) => {
+          console.log(error);
+      });
+
+  }
+
 
 
   useEffect(()=> {
@@ -103,13 +129,16 @@ const App = (props) => {
             <Grid container direction='column' spacing={2}>
                 <Grid item>
                     <div className={classes.greetingsContainer}>
-                        <Typography variant='h6'><Box fontWeight='bold'>Restaurant Finder App</Box></Typography>
+                        <Typography variant='h6'><Box fontWeight='bold'>Restaurant Finder</Box></Typography>
                         <Typography variant='subtitle2' style={{opacity: '0.7'}}>Current Location: {userLocation} </Typography>
                     </div>
                 </Grid>
                 <Grid item>
+                  <RestaurantSearch incrstate = {(inputValue) => incrstate(inputValue)}/>
+                </Grid>
+                <Grid item>
                   <NearbyRestaurants>
-                    {nearbyRestaurants.map((select, index) => {
+                    {nearbyRestaurants.slice(0, 9).map((select, index) => {
                       return <Grid item key = {index}>
                         <RestaurantItem
                           Name = {select.restaurant.name}
@@ -123,6 +152,9 @@ const App = (props) => {
 
                     })}
                   </NearbyRestaurants>
+                </Grid>
+                <Grid Item>
+                  {/* <RestaurantMap></RestaurantMap> */}
                 </Grid>
             </Grid>
           </Grid>
