@@ -9,6 +9,8 @@ import RestaurantSearch from 'components/main/RestaurantSearch';
 import history from './history';
 import SearchResults from 'components/main/SearchResults';
 import Divider from '@material-ui/core/Divider';
+import Navbar from 'components/navigation/Navbar';
+import withWidth, { isWidthUp } from '@material-ui/core/withWidth';
 
 
 
@@ -17,7 +19,7 @@ const contrastText = '#2C3C56';
 let theme = createMuiTheme({
     palette: {
         primary: {
-            main: '#306DDF',
+            main: '#F2F2F4',
             contrastText: '#ffff',
         },
         secondary: {
@@ -59,6 +61,7 @@ const useStyles = makeStyles((theme) => ({
   container: {
     background: "#F2F2F4",
     height: '180vh',
+    width: '100vw',
   },
   greetingsContainer: {
     boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)',
@@ -79,7 +82,7 @@ const App = (props) => {
   const [userLocation, setUserLocation] = useState('unknown');
   const [nearbyRestaurants, setNearbyRestaurants] = useState([]);
   const [searchRestaurants, setSearchRestaurants] = useState([]);
-  const [render, setRender] = useState(0);
+  const [columns, setColumns] = useState(3);
   const [isSearched, setIsSearched] = useState(false);
 
   const [text, setText] = useState('');
@@ -131,6 +134,18 @@ const App = (props) => {
 
   }
 
+  const getGridListCols = () => {
+    if (isWidthUp('lg', props.width)) {
+      return 3;
+    }
+
+    if (isWidthUp('md', props.width)) {
+      return 2;
+    }
+
+    return 1;
+  }
+
 
   useEffect(()=> {
     navigator.geolocation.getCurrentPosition(function(position) {
@@ -158,8 +173,10 @@ const App = (props) => {
     <Fade in timeout={1000}>
       <div className = {classes.container}>
         <Grid container direction = 'row' spacing = {0} justify = 'center' alignItems = 'stretch' alignContent = 'strecth'>
+          
           <Grid item xs={12} md={6} lg={7} xl={7} style={{marginLeft: '1rem', marginTop: '1rem', height: '80vmin'}}>
-            <Grid container direction='column' spacing={2}>
+            <Grid container direction='column' spacing={8}>
+                {/* <Navbar/> */}
                 <Grid item>
                     <div className={classes.greetingsContainer}>
                         <Typography variant='h6'><Box fontWeight='bold'>Restaurant Finder</Box></Typography>
@@ -175,7 +192,7 @@ const App = (props) => {
                     {isSearched ? SearchRender() : ''}
                 </Grid>
                 <Grid item>
-                  <NearbyRestaurants>
+                  <NearbyRestaurants columns = {getGridListCols}>
                     {nearbyRestaurants.slice(0, 9).map((select, index) => {
                       return <Grid item key = {index} onClick={() => history.push({
                         pathname: '/RestaurantPage',
