@@ -7,6 +7,8 @@ import NearbyRestaurants from 'components/main/NearbyRestaurants';
 import RestaurantItem from 'components/main/RestaurantItem';
 import RestaurantSearch from 'components/main/RestaurantSearch';
 import history from './history';
+import SearchResults from 'components/main/SearchResults';
+import Divider from '@material-ui/core/Divider';
 
 
 
@@ -55,13 +57,14 @@ theme = responsiveFontSizes(theme);
 
 const useStyles = makeStyles((theme) => ({
   container: {
+    background: "#F2F2F4",
+    height: '180vh',
   },
   greetingsContainer: {
     boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)',
-    background: '#306CDF',
+    background: '#FECC2A',
     padding: '1rem 3rem',
     borderRadius: '4px',
-    color: '#fff',
   }
   
 }));
@@ -75,15 +78,42 @@ const App = (props) => {
   const [userLon, setLon] = useState(-73.8492416);
   const [userLocation, setUserLocation] = useState('unknown');
   const [nearbyRestaurants, setNearbyRestaurants] = useState([]);
+  const [searchRestaurants, setSearchRestaurants] = useState([]);
   const [render, setRender] = useState(0);
   const [isSearched, setIsSearched] = useState(false);
-  const [redirect, setRedirect] = useState(null);
-  const [selectedResID, setSelectedResID] = useState(null);
 
   const [text, setText] = useState('');
 
+
+  const SearchRender = () => {
+    return (
+      <SearchResults>
+      {searchRestaurants.slice(0, 6).map((select, index) => {
+          return <Grid item key = {index} onClick={() => history.push({
+            pathname: '/RestaurantPage',
+            data: select.restaurant.R.res_id,
+            userLat: userLat,
+            userLon: userLon,
+          })}>
+            <RestaurantItem
+              Name = {select.restaurant.name}
+              Cuisine = {select.restaurant.cuisines}
+              Address = {select.restaurant.location.address}
+              Price = {select.restaurant.price_range}
+              Image = {select.restaurant.featured_image}
+              resID = {select.restaurant.R.res_id}
+            />
+
+          </Grid>
+
+        })}
+      </SearchResults>
+    );
+
+  }
+
   const incrstate = (inputValue) => {
-    setRender(render + 1);
+    setIsSearched(true);
     console.log(inputValue);
     fetch(`${apiLink}/search?q=${inputValue}&lat=${userLat}&lon=${userLon}`, {
       method: 'GET',
@@ -93,13 +123,14 @@ const App = (props) => {
       }})
       .then((res) => res.json())
       .then((res) => {
-        setNearbyRestaurants(res.restaurants);
+        setSearchRestaurants(res.restaurants);
       },
       (error) => {
           console.log(error);
       });
 
   }
+
 
   useEffect(()=> {
     navigator.geolocation.getCurrentPosition(function(position) {
@@ -136,7 +167,12 @@ const App = (props) => {
                     </div>
                 </Grid>
                 <Grid item>
+                  <Typography variant='h6'><Box fontWeight='bold'>Search</Box></Typography>
                   <RestaurantSearch incrstate = {(inputValue) => incrstate(inputValue)}/>
+                </Grid>
+                <Grid item>
+
+                    {isSearched ? SearchRender() : ''}
                 </Grid>
                 <Grid item>
                   <NearbyRestaurants>

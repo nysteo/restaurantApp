@@ -3,9 +3,10 @@ import {Grid, Fade, Button, makeStyles, Typography, Box, Link} from '@material-u
 import Divider from '@material-ui/core/Divider';
 import history from '../history';
 
-
 const useStyles = makeStyles((theme) => ({
     container: {
+        background: '#F2F2F4',
+        height: '100vh',
         
     },
     greetingsContainer: {
@@ -14,10 +15,11 @@ const useStyles = makeStyles((theme) => ({
     },
     media: {
     width: '100%',
-    height: '500px',
+    height: '430px',
     },
     secondaryContainer: {
-        background: '#F1EFF8',
+        background: '#FFFFFF',
+        height: '400px',
         padding: '1rem 3rem',
     }
 }));
@@ -92,18 +94,20 @@ const RestaurantPage = (props) => {
         <Fade in timeout = {4000}>
             <div className = {classes.container}>
                 <Grid container direction = 'row' spacing = {0} justify = 'center' alignItems = 'stretch' alignContent = 'stretch'>
-                    <Grid item xs={12} md={6} lg={7} xl={7} style={{marginLeft: '1rem', marginTop: '1rem', height: '80vmin'}}>
+                    <Grid item xs={3}  style={{marginLeft: '1rem', marginTop: '1rem', height: '80vmin'}}>
+                        <Grid container direction='column' spacing={0}>
+                            <Grid item> <img className = {classes.media} src = {featuredImage}/></Grid>
+                         </Grid>                        
+                    </Grid>
+                    <Grid item xs={4}  style={{ marginTop: '1rem', height: '80vmin'}}>
                         <Grid container direction='column' spacing={0}>
                             <Grid Item>
-                                <div className = {classes.greetingsContainer}>
-                                <Typography variant = 'h5'><Box fontWeight = 'bold'>{name} ({address}) </Box> </Typography>
-
-                                </div>
-                            </Grid>
-                            <Grid item> <img className = {classes.media} src = {featuredImage}/></Grid>
-                            <Grid item>
                                 <div className = {classes.secondaryContainer}>
-                                    <Typography> {cuisine}   -  Price: {priceRange == 1 && ' $'}{priceRange == 2 && ' $$'}{priceRange == 3 && ' $$$'}{priceRange == 4 && ' $$$'}  -   Phone Number: {phoneNumber}</Typography>
+                                    <Typography variant = 'h4'><Box fontWeight = 'bold'>{name}</Box> </Typography>
+                                    <Typography variant = 'h6'>Address: {address}</Typography>
+                                    <Typography cariant = 'h6'>Phone Number(s): {phoneNumber}</Typography>
+                                    <Typography variant = 'h6'>Cuisine: {cuisine}</Typography> 
+                                    <Typography variant = 'h6'>Price: {priceRange == 1 && ' $'}{priceRange == 2 && ' $$'}{priceRange == 3 && ' $$$'}{priceRange == 4 && ' $$$'}</Typography>
                                 </div>
                             </Grid> 
                          </Grid>

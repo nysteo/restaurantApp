@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {makeStyles, Grid} from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import InputBase from '@material-ui/core/InputBase';
-import Divider from '@material-ui/core/Divider';
+
 import SearchIcon from '@material-ui/icons/Search';
 
 const useStyles = makeStyles((theme) => ({
@@ -37,6 +37,7 @@ const useStyles = makeStyles((theme) => ({
     const onSubmit = () => {
         console.log(inputValue);
         props.incrstate(inputValue);
+        setInputValue('');
     }
     
     const handleChange = (event) => {

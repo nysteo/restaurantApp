@@ -16,15 +16,16 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const NearbyRestaurants = (props) => {
+const SearchResults = (props) => {
     const classes = useStyles();
     return (
-    <Grid container direction='row'>
-        <Grid item><Typography variant='h5' className={classes.label}><Box fontWeight='bold'>Nearby Restaurants</Box></Typography></Grid>
-        <GridList cols = {3} spacing = {50} cellHeight = 'auto'>
-            {props.children}
-        </GridList>
-    </Grid>
+        <Grid container direction = 'row'>
+            <Grid item><Typography variant='h5' className={classes.label}><Box fontWeight='bold'>Search Results</Box></Typography></Grid>
+            <GridList cols = {3} spacing = {50} cellHeight = 'auto'>
+                {props.children}
+            </GridList>
+        </Grid>
     )
-};
-export default NearbyRestaurants;
+}
+
+export default SearchResults;
