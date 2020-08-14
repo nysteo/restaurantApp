@@ -1,5 +1,5 @@
 import React from 'react';
-import {Grid, Typography, makeStyles, Box, Link, GridList} from '@material-ui/core';
+import {Grid, Typography, makeStyles, Box, Link, GridList, Button, Fade} from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -12,7 +12,8 @@ const useStyles = makeStyles((theme) => ({
         paddingBottom: '1rem',
     },
     link: {
-        color: '#000',
+        color: '#FECC2A',
+        cursor: 'pointer',
     },
 }));
 
@@ -20,11 +21,13 @@ const SearchResults = (props) => {
     const classes = useStyles();
     return (
         <Grid container direction = 'row'>
-            <Grid item><Typography variant='h5' className={classes.label}><Box fontWeight='bold'>Search Results</Box></Typography></Grid>
+            <Grid item><Typography variant='h5' className={classes.label}><Box fontWeight='bold' component = 'span' m = {1}>Search Results</Box><Link className = {classes.link} onClick = {props.resetSearch}> Clear Results </Link></Typography></Grid>
             <GridList cols = {3} spacing = {50} cellHeight = 'auto'>
                 {props.children}
             </GridList>
         </Grid>
+
+
     )
 }
 

@@ -11,6 +11,7 @@ import SearchResults from 'components/main/SearchResults';
 import Divider from '@material-ui/core/Divider';
 import Navbar from 'components/navigation/Navbar';
 import withWidth, { isWidthUp } from '@material-ui/core/withWidth';
+import SimpleMap from 'components/map/map.js';
 
 
 
@@ -60,7 +61,7 @@ theme = responsiveFontSizes(theme);
 const useStyles = makeStyles((theme) => ({
   container: {
     background: "#F2F2F4",
-    height: '180vh',
+    height: '200vh',
     width: '100vw',
   },
   greetingsContainer: {
@@ -76,6 +77,7 @@ const useStyles = makeStyles((theme) => ({
 
 const App = (props) => {
   const apiLink = 'https://developers.zomato.com/api/v2.1/';
+  const apiKEY = 'AIzaSyBmgOiH7X5LLYQobkagdguj77-wMrojGDI';
   const classes = useStyles();
   const [userLat, setLat] = useState(40.7273472);
   const [userLon, setLon] = useState(-73.8492416);
@@ -90,7 +92,7 @@ const App = (props) => {
 
   const SearchRender = () => {
     return (
-      <SearchResults>
+      <SearchResults resetSearch = {() => resetSearch()}>
       {searchRestaurants.slice(0, 6).map((select, index) => {
           return <Grid item key = {index} onClick={() => history.push({
             pathname: '/RestaurantPage',
@@ -114,6 +116,9 @@ const App = (props) => {
     );
 
   }
+
+
+
 
   const incrstate = (inputValue) => {
     setIsSearched(true);
@@ -144,6 +149,10 @@ const App = (props) => {
     }
 
     return 1;
+  }
+
+  const resetSearch = () => {
+    setSearchRestaurants([]);
   }
 
 
@@ -215,7 +224,8 @@ const App = (props) => {
                   </NearbyRestaurants>
                 </Grid>
                 <Grid Item>
-                  {/* <RestaurantMap></RestaurantMap> */}
+                  <SimpleMap userLat = {userLat} userLon = {userLon}></SimpleMap>
+
                 </Grid>
             </Grid>
           </Grid>
