@@ -90,7 +90,10 @@ const App = (props) => {
   }
 
   const getGridListCols = () => {
-    if (isWidthUp('md', props.width)) {
+    if ( isWidthUp('xl', props.width)) {
+      return 4;
+    }
+    if (isWidthUp('lg', props.width)) {
       return 3;
     }
 

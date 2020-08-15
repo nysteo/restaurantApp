@@ -6,7 +6,7 @@ import exampleImage from 'images/example.jpeg';
 const useStyles = makeStyles((theme) => ({
     root: {
         cursor: 'pointer',
-        maxWidth: '400px',
+        maxWidth: '300px',
         fontFamily: 'Poppins',
     },
     media: {
