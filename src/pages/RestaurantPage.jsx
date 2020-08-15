@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {Grid, Fade, Button, makeStyles, Typography, Box, Link} from '@material-ui/core';
 import Divider from '@material-ui/core/Divider';
 import history from '../history';
+import RestaurantMap from '../components/map/Map';
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -35,7 +36,7 @@ const RestaurantPage = (props) => {
     const [address, setAddress] = useState('');
     const [numReviews, setNumReviews] = useState(0);
     const [restaurantLat, setRestaurantLat] = useState(0);
-    const [restaurantLon, setRestaurantLon] = useState(0);
+    const [restaurantLon, setRestaurantLon] = useState(0);;
 
     const classes = useStyles();
 
@@ -116,7 +117,6 @@ const RestaurantPage = (props) => {
                          </Grid>
                         
                     </Grid>
-                    
                 </Grid>
             </div>
         </Fade>

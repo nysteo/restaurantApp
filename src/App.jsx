@@ -11,7 +11,7 @@ import SearchResults from 'components/main/SearchResults';
 import Divider from '@material-ui/core/Divider';
 import Navbar from 'components/navigation/Navbar';
 import withWidth, { isWidthUp } from '@material-ui/core/withWidth';
-import SimpleMap from 'components/map/map.js';
+import RestaurantMap from 'components/map/Map';
 
 
 
@@ -63,6 +63,7 @@ const useStyles = makeStyles((theme) => ({
     background: "#F2F2F4",
     height: '200vh',
     width: '100vw',
+    padding: '4rem 4rem 4rem 4rem'
   },
   greetingsContainer: {
     boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)',
@@ -223,10 +224,8 @@ const App = (props) => {
                     })}
                   </NearbyRestaurants>
                 </Grid>
-                <Grid Item>
-                  <SimpleMap userLat = {userLat} userLon = {userLon}></SimpleMap>
-
-                </Grid>
+                  <Grid item><Typography variant = 'h4'><Box fontWeight = 'bold'> Near You</Box> </Typography></Grid>
+                  <RestaurantMap userLat = {userLat} userLon = {userLon} nearbyRestaurants = {nearbyRestaurants}></RestaurantMap>
             </Grid>
           </Grid>
         </Grid>
