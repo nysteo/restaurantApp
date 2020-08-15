@@ -1,62 +1,14 @@
 import React, {useEffect, useState} from 'react';
-import {ThemeProvider, createMuiTheme, responsiveFontSizes, Typography, Grid, Fade, Button, makeStyles, Box} from '@material-ui/core'
-import logo from './logo.svg';
+import { Typography, Grid, Fade, makeStyles, Box} from '@material-ui/core'
 import './App.css';
-import RestaurantPage from 'pages/RestaurantPage';
 import NearbyRestaurants from 'components/main/NearbyRestaurants';
 import RestaurantItem from 'components/main/RestaurantItem';
 import RestaurantSearch from 'components/main/RestaurantSearch';
 import history from './history';
 import SearchResults from 'components/main/SearchResults';
-import Divider from '@material-ui/core/Divider';
-import Navbar from 'components/navigation/Navbar';
-import withWidth, { isWidthUp } from '@material-ui/core/withWidth';
+import  isWidthUp from '@material-ui/core/withWidth';
 import RestaurantMap from 'components/map/Map';
 
-
-
-//Set up theme for Styling
-const contrastText = '#2C3C56';
-let theme = createMuiTheme({
-    palette: {
-        primary: {
-            main: '#F2F2F4',
-            contrastText: '#ffff',
-        },
-        secondary: {
-            main: '#FEAD18',
-            contrastText: contrastText,
-        },
-        error: {
-            main: '#F46D66',
-            contrastText: contrastText,
-        },
-        info: {
-            main: '#7064D0',
-            contrastText: contrastText,
-        },
-        success: {
-            main: '#47C594',
-            contrastText: contrastText,
-        },
-        background: '#F5F8FF',
-        text: {
-            primary: '#2C3C56',
-            secondary: '#AEAEAE',
-        },
-    },
-    typography: {
-        fontFamily: 'Poppins',
-    },
-    overrides: {
-        MuiTab: {
-            wrapper: {
-                flexDirection: 'row',
-            },
-        },
-    },
-});
-theme = responsiveFontSizes(theme);
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -78,17 +30,14 @@ const useStyles = makeStyles((theme) => ({
 
 const App = (props) => {
   const apiLink = 'https://developers.zomato.com/api/v2.1/';
-  const apiKEY = 'AIzaSyBmgOiH7X5LLYQobkagdguj77-wMrojGDI';
   const classes = useStyles();
   const [userLat, setLat] = useState(40.7273472);
   const [userLon, setLon] = useState(-73.8492416);
   const [userLocation, setUserLocation] = useState('unknown');
   const [nearbyRestaurants, setNearbyRestaurants] = useState([]);
   const [searchRestaurants, setSearchRestaurants] = useState([]);
-  const [columns, setColumns] = useState(3);
   const [isSearched, setIsSearched] = useState(false);
 
-  const [text, setText] = useState('');
 
 
   const SearchRender = () => {
@@ -177,7 +126,7 @@ const App = (props) => {
         (error) => {
             console.log(error);
         });
-  }, [apiLink]);
+  });
 
   return (
     <Fade in timeout={1000}>

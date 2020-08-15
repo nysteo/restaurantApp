@@ -1,13 +1,11 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import GoogleMapReact from 'google-map-react';
 import LocationIcon from '@material-ui/icons/LocationOn'
 import UserIcon from '@material-ui/icons/Person';
-import { Typography, Grid, Box } from '@material-ui/core';
+import { Typography, Grid } from '@material-ui/core';
 
 const RestaurantMap = (props) => {
-  const [nearbyRestaurants, setNearbyRestaurants] = useState(null);
-  const [map, setMap] = useState(null);
-  const [maps, setMaps] = useState(null);
+
 
   const UserPin = ()=> (
     <div className = "pin">

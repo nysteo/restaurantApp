@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from 'react';
-import {Grid, Fade, Button, makeStyles, Typography, Box, Link} from '@material-ui/core';
-import Divider from '@material-ui/core/Divider';
+import {Grid, Fade, Button, makeStyles, Typography, Box} from '@material-ui/core';
+
 import history from '../history';
-import RestaurantMap from '../components/map/Map';
+
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -27,7 +27,6 @@ const useStyles = makeStyles((theme) => ({
 
 const RestaurantPage = (props) => {
     const apiLink = 'https://developers.zomato.com/api/v2.1/';
-    const [resID, setResID] = useState(0);
     const [name, setName] = useState('');
     const [featuredImage, setFeaturedImage] = useState('');
     const [priceRange, setPriceRange] = useState('');
@@ -35,8 +34,6 @@ const RestaurantPage = (props) => {
     const [cuisine, setCuisine] = useState('');
     const [address, setAddress] = useState('');
     const [numReviews, setNumReviews] = useState(0);
-    const [restaurantLat, setRestaurantLat] = useState(0);
-    const [restaurantLon, setRestaurantLon] = useState(0);;
 
     const classes = useStyles();
 
@@ -51,7 +48,6 @@ const RestaurantPage = (props) => {
     }
     
     useEffect(()=> {    
-        setResID(props.location.data);
         fetch(`${apiLink}restaurant?res_id=${props.location.data}`, {
             method: 'GET',
             headers: {
@@ -68,8 +64,6 @@ const RestaurantPage = (props) => {
               setCuisine(res.cuisines);
               setAddress(res.location.address);
               setNumReviews(res.all_reviews_count);
-              setRestaurantLat(res.location.latitude);
-              setRestaurantLon(res.location.longitude);
 
             },
             (error) => {
@@ -90,14 +84,14 @@ const RestaurantPage = (props) => {
             //         console.log(error);
             //     });
 
-    }, [apiLink]);
+    });
     return (
         <Fade in timeout = {4000}>
             <div className = {classes.container}>
                 <Grid container direction = 'row' spacing = {0} justify = 'center' alignItems = 'stretch' alignContent = 'stretch'>
                     <Grid item xs={3}  style={{marginLeft: '1rem', marginTop: '1rem', height: '80vmin'}}>
                         <Grid container direction='column' spacing={0}>
-                            <Grid item> <img className = {classes.media} src = {featuredImage}/></Grid>
+                            <Grid item> <img className = {classes.media} alt = 'restaurant' src = {featuredImage}/></Grid>
                          </Grid>                        
                     </Grid>
                     <Grid item xs={4}  style={{ marginTop: '1rem', height: '80vmin'}}>
@@ -108,7 +102,8 @@ const RestaurantPage = (props) => {
                                     <Typography variant = 'h6'>Address: {address}</Typography>
                                     <Typography cariant = 'h6'>Phone Number(s): {phoneNumber}</Typography>
                                     <Typography variant = 'h6'>Cuisine: {cuisine}</Typography> 
-                                    <Typography variant = 'h6'>Price: {priceRange == 1 && ' $'}{priceRange == 2 && ' $$'}{priceRange == 3 && ' $$$'}{priceRange == 4 && ' $$$'}</Typography>
+                                    <Typography variant = 'h6'>Price: {priceRange === 1 && ' $'}{priceRange === 2 && ' $$'}{priceRange === 3 && ' $$$'}{priceRange === 4 && ' $$$'}</Typography>
+                                    <Typography variant = 'h6'>Number of Reviews: {numReviews}</Typography>
                                 </div>
                             </Grid> 
                          </Grid>
