@@ -14,8 +14,11 @@ const useStyles = makeStyles((theme) => ({
   container: {
     background: "#F2F2F4",
     height: '230vh',
-    width: '100vw',
-    padding: '4rem 4rem 4rem 4rem'
+    maxWidth: '100vw',
+    padding: '2rem 2rem 2rem 2rem',
+    [theme.breakpoints.down('lg')]: {
+      padding: '1rem 1rem 1rem 1rem'
+    },
   },
   greetingsContainer: {
     boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)',
@@ -48,7 +51,7 @@ const App = (props) => {
     }
 
     if (isWidthUp('md', props.width)) {
-      return 3;
+      return 4;
     }
 
     if (isWidthUp('xs', props.width)) {
