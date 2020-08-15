@@ -31,8 +31,8 @@ const useStyles = makeStyles((theme) => ({
 const App = (props) => {
   const apiLink = 'https://developers.zomato.com/api/v2.1/';
   const classes = useStyles();
-  const [userLat, setLat] = useState(40.7273472);
-  const [userLon, setLon] = useState(-73.8492416);
+  const [userLat, setLat] = useState(null);
+  const [userLon, setLon] = useState(null);
   const [userLocation, setUserLocation] = useState('unknown');
   const [nearbyRestaurants, setNearbyRestaurants] = useState([]);
   const [searchRestaurants, setSearchRestaurants] = useState([]);
@@ -120,7 +120,9 @@ const App = (props) => {
       setLat(position.coords.latitude);
       setLon(position.coords.longitude);
     });
-    fetch(`${apiLink}/geocode?lat=${userLat}&lon=${userLon}`, {
+
+    if(userLat != null && userLon != null){
+      fetch(`${apiLink}/geocode?lat=${userLat}&lon=${userLon}`, {
         method: 'GET',
         headers: {
             'Accept': 'application/json',
@@ -135,6 +137,9 @@ const App = (props) => {
         (error) => {
             console.log(error);
         });
+
+    }
+
   });
 
   return (
