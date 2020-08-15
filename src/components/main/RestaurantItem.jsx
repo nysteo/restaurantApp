@@ -6,7 +6,12 @@ import exampleImage from 'images/example.jpeg';
 const useStyles = makeStyles((theme) => ({
     root: {
         cursor: 'pointer',
-        maxWidth: '300px',
+        [theme.breakpoints.up('lg')]: {
+            maxWidth: '280px',
+        },
+        [theme.breakpoints.down('md')]: {
+            maxWidth: '350px',
+        },
         fontFamily: 'Poppins',
     },
     media: {

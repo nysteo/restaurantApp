@@ -94,10 +94,14 @@ const App = (props) => {
       return 4;
     }
     if (isWidthUp('lg', props.width)) {
-      return 3;
+      return 4;
     }
 
     if (isWidthUp('md', props.width)) {
+      return 3;
+    }
+
+    if (isWidthUp('xs', props.width)) {
       return 2;
     }
 
@@ -155,7 +159,7 @@ const App = (props) => {
                 </Grid>
                 <Grid item>
                   <NearbyRestaurants columns = {getGridListCols}>
-                    {nearbyRestaurants.slice(0, 9).map((select, index) => {
+                    {nearbyRestaurants.slice(0, 8).map((select, index) => {
                       return <Grid item key = {index} onClick={() => history.push({
                         pathname: '/RestaurantPage',
                         data: select.restaurant.R.res_id,
