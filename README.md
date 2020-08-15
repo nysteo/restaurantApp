@@ -11,5 +11,8 @@
 - material-ui
 - google-maps-react
 
+## DEMO LINK
+https://nysteo-restaurantapp.netlify.app/
+
 
 This project was created by Teo Nys August 2020
