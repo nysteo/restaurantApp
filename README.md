@@ -1,5 +1,3 @@
-This project was created by Teo Nys August 2020
-
 ## STIT Front-End Programming Challenge
 
 ## DOWNLOADING INSTRUCTIONS
@@ -12,3 +10,6 @@ This project was created by Teo Nys August 2020
 ## Dependencies Used
 - material-ui
 - google-maps-react
+
+
+This project was created by Teo Nys August 2020
