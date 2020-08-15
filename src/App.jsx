@@ -13,7 +13,7 @@ import RestaurantMap from 'components/map/Map';
 const useStyles = makeStyles((theme) => ({
   container: {
     background: "#F2F2F4",
-    height: '200vh',
+    height: '230vh',
     width: '100vw',
     padding: '4rem 4rem 4rem 4rem'
   },
@@ -90,7 +90,7 @@ const App = (props) => {
   }
 
   const getGridListCols = () => {
-    if (isWidthUp('lg', props.width)) {
+    if (isWidthUp('md', props.width)) {
       return 3;
     }
 
