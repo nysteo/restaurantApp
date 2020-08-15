@@ -39,11 +39,31 @@ const App = (props) => {
   const [isSearched, setIsSearched] = useState(false);
 
 
+  const getGridListCols = () => {
+    if ( isWidthUp('xl', props.width)) {
+      return 4;
+    }
+    if (isWidthUp('lg', props.width)) {
+      return 4;
+    }
+
+    if (isWidthUp('md', props.width)) {
+      return 3;
+    }
+
+    if (isWidthUp('xs', props.width)) {
+      return 2;
+    }
+
+    return 1;
+  }
+
+
 
   const SearchRender = () => {
     return (
-      <SearchResults resetSearch = {() => resetSearch()}>
-      {searchRestaurants.slice(0, 6).map((select, index) => {
+      <SearchResults columns = {getGridListCols} resetSearch = {() => resetSearch()}>
+      {searchRestaurants.slice(0, 8).map((select, index) => {
           return <Grid item key = {index} onClick={() => history.push({
             pathname: '/RestaurantPage',
             data: select.restaurant.R.res_id,
@@ -89,24 +109,6 @@ const App = (props) => {
 
   }
 
-  const getGridListCols = () => {
-    if ( isWidthUp('xl', props.width)) {
-      return 4;
-    }
-    if (isWidthUp('lg', props.width)) {
-      return 4;
-    }
-
-    if (isWidthUp('md', props.width)) {
-      return 3;
-    }
-
-    if (isWidthUp('xs', props.width)) {
-      return 2;
-    }
-
-    return 1;
-  }
 
   const resetSearch = () => {
     setSearchRestaurants([]);

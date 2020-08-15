@@ -22,7 +22,7 @@ const SearchResults = (props) => {
     return (
         <Grid container direction = 'row'>
             <Grid item><Typography variant='h5' className={classes.label}><Box fontWeight='bold' component = 'span' m = {1}>Search Results</Box><Link className = {classes.link} onClick = {props.resetSearch}> Clear Results </Link></Typography></Grid>
-            <GridList cols = {3} spacing = {50} cellHeight = 'auto'>
+            <GridList cols = {props.columns} spacing = {100} cellHeight = 'auto'>
                 {props.children}
             </GridList>
         </Grid>
