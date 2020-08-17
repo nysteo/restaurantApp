@@ -149,7 +149,7 @@ const App = (props) => {
     }
 
   });
-  if(userLat != null && userLon != null){
+  if(userLocation != 'unknown'){
     return (
       <Fade in timeout={1000}>
         <div className = {classes.container}>
