@@ -41,6 +41,7 @@ const App = (props) => {
   const [nearbyRestaurants, setNearbyRestaurants] = useState([]);
   const [searchRestaurants, setSearchRestaurants] = useState([]);
   const [isSearched, setIsSearched] = useState(false);
+  const [isRendered, setIsRendered] = useState(false);
 
 
   const getGridListCols = () => {
@@ -96,12 +97,11 @@ const App = (props) => {
 
   const incrstate = (inputValue) => {
     setIsSearched(true);
-    console.log(inputValue);
     fetch(`${apiLink}/search?q=${inputValue}&lat=${userLat}&lon=${userLon}`, {
       method: 'GET',
       headers: {
           'Accept': 'application/json',
-          'user-key': '6a14e6f5ec6a7ff2475989f5ba2b27e9',
+          'user-key': '095b809ac98db3a604cbfc6b0ed72fe8',
       }})
       .then((res) => res.json())
       .then((res) => {
@@ -118,14 +118,19 @@ const App = (props) => {
     setSearchRestaurants([]);
   }
 
-
-  useEffect(()=> {
+  const getUserPosition = () => {
     navigator.geolocation.getCurrentPosition(function(position) {
       setLat(position.coords.latitude);
       setLon(position.coords.longitude);
     });
+  }
 
-    if(userLat != null && userLon != null){
+
+
+  useEffect(()=> {
+    getUserPosition();
+    if(userLat != null && userLon != null && isRendered != true){
+      setIsRendered(true);
       fetch(`${apiLink}/geocode?lat=${userLat}&lon=${userLon}`, {
         method: 'GET',
         headers: {
@@ -134,7 +139,6 @@ const App = (props) => {
         }})
         .then((res) => res.json())
         .then((res) => {
-          console.log(res)
           setUserLocation(res.location.title);
           setNearbyRestaurants(res.nearby_restaurants);
         },

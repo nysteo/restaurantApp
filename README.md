@@ -15,4 +15,8 @@
 https://nysteo-restaurantapp.netlify.app/
 
 
+## Issues/ Problems
+-zomato api only returns the number of reviews not the reviews themselves.
+- if the restaurants do not load, the app might have run out of api calls. (if this happens please reach out to me at teonys@nyu.edu)
+
 This project was created by Teo Nys August 2020
