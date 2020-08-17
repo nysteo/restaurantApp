@@ -101,11 +101,12 @@ const App = (props) => {
       method: 'GET',
       headers: {
           'Accept': 'application/json',
-          'user-key': '095b809ac98db3a604cbfc6b0ed72fe8',
+          'user-key': '917d2a0d3ae99fe3914254e338958ce8',
       }})
       .then((res) => res.json())
       .then((res) => {
         setSearchRestaurants(res.restaurants);
+        console.log('incrstate');
       },
       (error) => {
           console.log(error);
@@ -135,12 +136,13 @@ const App = (props) => {
         method: 'GET',
         headers: {
             'Accept': 'application/json',
-            'user-key': '6a14e6f5ec6a7ff2475989f5ba2b27e9',
+            'user-key': '917d2a0d3ae99fe3914254e338958ce8',
         }})
         .then((res) => res.json())
         .then((res) => {
           setUserLocation(res.location.title);
           setNearbyRestaurants(res.nearby_restaurants);
+          console.log('useEffect');
         },
         (error) => {
             console.log(error);

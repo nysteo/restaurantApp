@@ -34,6 +34,7 @@ const RestaurantPage = (props) => {
     const [cuisine, setCuisine] = useState('');
     const [address, setAddress] = useState('');
     const [numReviews, setNumReviews] = useState(0);
+    const [isRendered, setIsRendered] = useState(false);
 
     const classes = useStyles();
 
@@ -46,55 +47,52 @@ const RestaurantPage = (props) => {
     const handleBack = () => {
         history.push('/');
     }
+
+    const renderMedia = () => {
+        return ( 
+        <Grid item xs={3}  style={{marginLeft: '1rem', marginTop: '1rem', height: '80vmin'}}>
+            <Grid container direction='column' spacing={0}>
+                <Grid item> <img className = {classes.media} alt = 'restaurant' src = {featuredImage}/></Grid>
+            </Grid>                        
+        </Grid>
+        )
+    }
     
     useEffect(()=> {    
-        fetch(`${apiLink}restaurant?res_id=${props.location.data}`, {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json',
-                'user-key': '095b809ac98db3a604cbfc6b0ed72fe8',
-            }})
-            .then((res) => res.json())
-            .then((res) => {
-              console.log(res);
-              setName(res.name);
-              setFeaturedImage(res.featured_image);
-              setPriceRange(res.price_range);
-              setPhoneNumber(res.phone_numbers);
-              setCuisine(res.cuisines);
-              setAddress(res.location.address);
-              setNumReviews(res.all_reviews_count);
+        if(isRendered !== true){
+            fetch(`${apiLink}restaurant?res_id=${props.location.data}`, {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json',
+                    'user-key': '917d2a0d3ae99fe3914254e338958ce8',
+                }})
+                .then((res) => res.json())
+                .then((res) => {
+                    setIsRendered(true);
+                  console.log(res);
+                  setName(res.name);
+                  setFeaturedImage(res.featured_image);
+                  setPriceRange(res.price_range);
+                  setPhoneNumber(res.phone_numbers);
+                  setCuisine(res.cuisines);
+                  setAddress(res.location.address);
+                  setNumReviews(res.all_reviews_count);
+                  console.log('restaurantPage')
+    
+                },
+                (error) => {
+                    console.log(error);
+                });
+                handleReload();
+        }
 
-            },
-            (error) => {
-                console.log(error);
-            });
-            handleReload();
-            // fetch(`https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=${props.location.userLat},${props.location.userLon}&destinations=${restaurantLat},${restaurantLon}&key=AIzaSyBmgOiH7X5LLYQobkagdguj77-wMrojGDIY`, {
-            //     method: 'GET',
-            //     headers: {
-            //         'Accept': 'application/json',
-            //         'RequestMode': 'no-cors',
-            //     }})
-            //     .then((res) => res.json())
-            //     .then((res) => {
-            //       console.log(res);
-            //     },
-            //     (error) => {
-            //         console.log(error);
-            //     });
 
     });
     return (
         <Fade in timeout = {4000}>
             <div className = {classes.container}>
                 <Grid container direction = 'row' spacing = {0} justify = 'center' alignItems = 'stretch' alignContent = 'stretch'>
-                    <Grid item xs={12} md={9} lg={7} xl={7} style={{marginLeft: '1rem', marginTop: '1rem'}}>
-                        <Grid item xs={3}  style={{marginLeft: '1rem', marginTop: '1rem', height: '80vmin'}}>
-                            <Grid container direction='column' spacing={0}>
-                                <Grid item> <img className = {classes.media} alt = 'restaurant' src = {featuredImage}/></Grid>
-                            </Grid>                        
-                        </Grid>
+                        {renderMedia()}
                         <Grid item xs={4}  style={{ marginTop: '1rem', height: '80vmin'}}>
                             <Grid container direction='column' spacing={0}>
                                 <Grid Item>
@@ -113,7 +111,6 @@ const RestaurantPage = (props) => {
                             </Grid>
                             
                         </Grid>
-                    </Grid>
                 </Grid>
             </div>
         </Fade>
