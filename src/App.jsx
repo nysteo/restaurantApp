@@ -129,7 +129,7 @@ const App = (props) => {
 
   useEffect(()=> {
     getUserPosition();
-    if(userLat != null && userLon != null && isRendered != true){
+    if(userLat !== null && userLon !== null && isRendered !== true){
       setIsRendered(true);
       fetch(`${apiLink}/geocode?lat=${userLat}&lon=${userLon}`, {
         method: 'GET',
@@ -148,8 +148,8 @@ const App = (props) => {
 
     }
 
-  });
-  if(userLocation != 'unknown'){
+  }, [userLat, userLon, isRendered]);
+  if(userLocation !== 'unknown'){
     return (
       <Fade in timeout={1000}>
         <div className = {classes.container}>
