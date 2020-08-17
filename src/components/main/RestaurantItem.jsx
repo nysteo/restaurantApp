@@ -32,7 +32,6 @@ const useStyles = makeStyles((theme) => ({
 
 const RestaurantItem = (props) => {
     const classes = useStyles();
-    console.log(props.Image ? 'yes' : 'no');
 
     return (
         <Grid  className = {classes.root} container  direction = 'column' spacing = {30}>

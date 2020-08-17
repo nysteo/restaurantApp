@@ -15,6 +15,7 @@ const useStyles = makeStyles((theme) => ({
         color: '#FECC2A',
         cursor: 'pointer',
     },
+
 }));
 
 const SearchResults = (props) => {

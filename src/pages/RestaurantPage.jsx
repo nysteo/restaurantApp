@@ -1,27 +1,41 @@
 import React, {useState, useEffect} from 'react';
 import {Grid, Fade, Button, makeStyles, Typography, Box} from '@material-ui/core';
+import exampleImage from 'images/example.jpeg';
+import StarIcon from '@material-ui/icons/Star';
 
 import history from '../history';
 
 
 const useStyles = makeStyles((theme) => ({
     container: {
-        background: '#F2F2F4',
         height: '100vh',
+        maxWidth: '100vw',
+        padding: '2rem 2rem 2rem 2rem',
+        [theme.breakpoints.down('lg')]: {
+          padding: '1rem 1rem 1rem 1rem'
+        },
         
     },
-    greetingsContainer: {
-        background: '#F1EFF8',
-        padding: '1rem 3rem',
+    descContainer: {
+        padding: '1rem 2rem',
     },
     media: {
-    width: '100%',
-    height: '430px',
+        width: '100%',
+        height: '500px',
+        [theme.breakpoints.down('md')]: {
+            height: '200px',
+        }
     },
-    secondaryContainer: {
-        background: '#FFFFFF',
-        height: '400px',
-        padding: '1rem 3rem',
+    highlight: {
+        background: '#FECC2A',
+        padding: '3px 6px 3px 6px',
+        borderRadius: '5px',
+
+    },
+    rating: {
+        padding: '6px 6px 6px 6px',
+        borderRadius: '5px',
+        background: '#47C594'
     }
 }));
 
@@ -35,6 +49,8 @@ const RestaurantPage = (props) => {
     const [address, setAddress] = useState('');
     const [numReviews, setNumReviews] = useState(0);
     const [isRendered, setIsRendered] = useState(false);
+    const [highlights, setHighlights] = useState([]);
+    const [userRating, setUserRating] = useState([]);
 
     const classes = useStyles();
 
@@ -77,7 +93,9 @@ const RestaurantPage = (props) => {
                   setCuisine(res.cuisines);
                   setAddress(res.location.address);
                   setNumReviews(res.all_reviews_count);
-                  console.log('restaurantPage')
+                  setHighlights(res.highlights);
+                  setUserRating(res.user_rating);
+
     
                 },
                 (error) => {
@@ -92,25 +110,29 @@ const RestaurantPage = (props) => {
         <Fade in timeout = {4000}>
             <div className = {classes.container}>
                 <Grid container direction = 'row' spacing = {0} justify = 'center' alignItems = 'stretch' alignContent = 'stretch'>
-                        {renderMedia()}
-                        <Grid item xs={4}  style={{ marginTop: '1rem', height: '80vmin'}}>
-                            <Grid container direction='column' spacing={0}>
-                                <Grid Item>
-                                    <div className = {classes.secondaryContainer}>
-                                        <Typography variant = 'h4'><Box fontWeight = 'bold'>{name}</Box> </Typography>
-                                        <Typography variant = 'h6'>Address: {address}</Typography>
-                                        <Typography cariant = 'h6'>Phone Number(s): {phoneNumber}</Typography>
-                                        <Typography variant = 'h6'>Cuisine: {cuisine}</Typography> 
-                                        <Typography variant = 'h6'>Price: {priceRange === 1 && ' $'}{priceRange === 2 && ' $$'}{priceRange === 3 && ' $$$'}{priceRange === 4 && ' $$$'}</Typography>
-                                        <Typography variant = 'h6'>Number of Reviews: {numReviews}</Typography>
-                                    </div>
-                                </Grid> 
-                            </Grid>
-                            <Grid container direction = 'row' justify = 'center'>
-                                <Grid Item><Button variant="contained" color="primary" onClick = {handleBack}> Back to Home </Button></Grid>
-                            </Grid>
-                            
-                        </Grid>
+                    <Grid item xs={12} md={6} lg={7} xl={7} style={{marginLeft: '1rem', marginTop: '1rem', height: '80vmin'}}>
+                        <Grid container direction='column' spacing={8}>
+                            <Grid item> 
+                                <img className = {classes.media} alt = 'restaurant' src = {featuredImage ? featuredImage : exampleImage}/>
+                            </Grid>    
+                            <Grid Item>
+                                <div className = {classes.descContainer}>
+                                    <Typography variant = 'h4'><Box fontWeight = 'bold' component = 'span' m = {1}>{name}</Box><Box fontWeight='bold' component = 'span' m = {1} className = {classes.highlight}><StarIcon/>{userRating.aggregate_rating}</Box> </Typography>
+                                    <Typography variant = 'h6'>Address: {address}</Typography>
+                                    <Typography cariant = 'h6'>Phone Number(s): {phoneNumber}</Typography>
+                                    <Typography variant = 'h6'>Cuisine: {cuisine}</Typography> 
+                                    <Typography variant = 'h6'>Price: {priceRange === 1 && ' $'}{priceRange === 2 && ' $$'}{priceRange === 3 && ' $$$'}{priceRange === 4 && ' $$$'}</Typography>
+                                    <Typography variant = 'h6'>Number of Reviews: {numReviews}</Typography>
+                                    <Typography variant = 'h6'> Highlights: </Typography>
+                                    <Grid container direction = 'row' spacing = {2}>
+                                        {highlights.map((select, index) => {
+                                            return <Grid item><Typography className = {classes.highlight}>{select}</Typography></Grid>
+                                        })}
+                                    </Grid>
+                                </div>
+                            </Grid>     
+                        </Grid>            
+                    </Grid>
                 </Grid>
             </div>
         </Fade>

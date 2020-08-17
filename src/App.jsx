@@ -13,7 +13,6 @@ import Loader from 'react-loader-spinner'
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    background: "#F2F2F4",
     height: '230vh',
     maxWidth: '100vw',
     padding: '2rem 2rem 2rem 2rem',
