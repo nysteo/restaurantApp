@@ -16,7 +16,11 @@ https://nysteo-restaurantapp.netlify.app/
 
 
 ## Issues/ Problems
--zomato api only returns the number of reviews not the reviews themselves.
+- zomato api only returns the number of reviews not the reviews themselves.
 - if the restaurants do not load, the app might have run out of api calls. (if this happens please reach out to me at teonys@nyu.edu)
+
+## Statistics 
+- Loading time: 2-3 seconds
+- Average API calls per visit: 3-6
 
 This project was created by Teo Nys August 2020
