@@ -8,6 +8,7 @@ import history from './history';
 import SearchResults from 'components/main/SearchResults';
 import  isWidthUp from '@material-ui/core/withWidth';
 import RestaurantMap from 'components/map/Map';
+import Loader from 'react-loader-spinner'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -50,8 +51,8 @@ const App = (props) => {
       return 4;
     }
 
-    if (isWidthUp('md', props.width)) {
-      return 4;
+    if (isWidthUp('sm', props.width)) {
+      return 3;
     }
 
     if (isWidthUp('xs', props.width)) {
@@ -144,61 +145,77 @@ const App = (props) => {
     }
 
   });
-
-  return (
-    <Fade in timeout={1000}>
-      <div className = {classes.container}>
-        <Grid container direction = 'row' spacing = {0} justify = 'center' alignItems = 'stretch' alignContent = 'strecth'>
-          
-          <Grid item xs={12} md={6} lg={7} xl={7} style={{marginLeft: '1rem', marginTop: '1rem', height: '80vmin'}}>
-            <Grid container direction='column' spacing={8}>
-                {/* <Navbar/> */}
-                <Grid item>
-                    <div className={classes.greetingsContainer}>
-                        <Typography variant='h6'><Box fontWeight='bold'>Restaurant Finder</Box></Typography>
-                        <Typography variant='subtitle2' style={{opacity: '0.7'}}>Current Location: {userLocation} </Typography>
-                    </div>
-                </Grid>
-                <Grid item>
-                  <Typography variant='h6'><Box fontWeight='bold'>Search</Box></Typography>
-                  <RestaurantSearch incrstate = {(inputValue) => incrstate(inputValue)}/>
-                </Grid>
-                <Grid item>
-
-                    {isSearched ? SearchRender() : ''}
-                </Grid>
-                <Grid item>
-                  <NearbyRestaurants columns = {getGridListCols}>
-                    {nearbyRestaurants.slice(0, 8).map((select, index) => {
-                      return <Grid item key = {index} onClick={() => history.push({
-                        pathname: '/RestaurantPage',
-                        data: select.restaurant.R.res_id,
-                        userLat: userLat,
-                        userLon: userLon,
-                      })}>
-                        <RestaurantItem
-                          Name = {select.restaurant.name}
-                          Cuisine = {select.restaurant.cuisines}
-                          Address = {select.restaurant.location.address}
-                          Price = {select.restaurant.price_range}
-                          Image = {select.restaurant.featured_image}
-                          resID = {select.restaurant.R.res_id}
-                        />
-
-                      </Grid>
-
-                    })}
-                  </NearbyRestaurants>
-                </Grid>
-                  <Grid item><Typography variant = 'h4'><Box fontWeight = 'bold'> Near You</Box> </Typography></Grid>
-                  <RestaurantMap userLat = {userLat} userLon = {userLon} nearbyRestaurants = {nearbyRestaurants}></RestaurantMap>
+  if(userLat != null && userLon != null){
+    return (
+      <Fade in timeout={1000}>
+        <div className = {classes.container}>
+          <Grid container direction = 'row' spacing = {0} justify = 'center' alignItems = 'stretch' alignContent = 'strecth'>
+            
+            <Grid item xs={12} md={6} lg={7} xl={7} style={{marginLeft: '1rem', marginTop: '1rem', height: '80vmin'}}>
+              <Grid container direction='column' spacing={8}>
+                  {/* <Navbar/> */}
+                  <Grid item>
+                      <div className={classes.greetingsContainer}>
+                          <Typography variant='h6'><Box fontWeight='bold'>Restaurant Finder</Box></Typography>
+                          <Typography variant='subtitle2' style={{opacity: '0.7'}}>Current Location: {userLocation} </Typography>
+                      </div>
+                  </Grid>
+                  <Grid item>
+                    <Typography variant='h6'><Box fontWeight='bold'>Search</Box></Typography>
+                    <RestaurantSearch incrstate = {(inputValue) => incrstate(inputValue)}/>
+                  </Grid>
+                  <Grid item>
+  
+                      {isSearched ? SearchRender() : ''}
+                  </Grid>
+                  <Grid item>
+                    <NearbyRestaurants columns = {getGridListCols}>
+                      {nearbyRestaurants.slice(0, 8).map((select, index) => {
+                        return <Grid item key = {index} onClick={() => history.push({
+                          pathname: '/RestaurantPage',
+                          data: select.restaurant.R.res_id,
+                          userLat: userLat,
+                          userLon: userLon,
+                        })}>
+                          <RestaurantItem
+                            Name = {select.restaurant.name}
+                            Cuisine = {select.restaurant.cuisines}
+                            Address = {select.restaurant.location.address}
+                            Price = {select.restaurant.price_range}
+                            Image = {select.restaurant.featured_image}
+                            resID = {select.restaurant.R.res_id}
+                          />
+  
+                        </Grid>
+  
+                      })}
+                    </NearbyRestaurants>
+                  </Grid>
+                    <Grid item><Typography variant = 'h4'><Box fontWeight = 'bold'> Near You</Box> </Typography></Grid>
+                    <RestaurantMap userLat = {userLat} userLon = {userLon} nearbyRestaurants = {nearbyRestaurants}></RestaurantMap>
+              </Grid>
             </Grid>
           </Grid>
-        </Grid>
-      </div>
-    </Fade>
+        </div>
+      </Fade>
+    
+      );
+
+  }else {
+    return(
+        <Loader
+          style = {{position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)"}}
+          type="ThreeDots"
+          color="#FECC2A"
+          height={100}
+          width={100}//3 secs
   
-    );
+        />
+
+
+     );
+  }
+
 
   
   
