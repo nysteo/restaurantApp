@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {makeStyles, Grid} from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import InputBase from '@material-ui/core/InputBase';
@@ -29,10 +29,22 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-
   const RestaurantSearch = (props) => {
       const classes = useStyles();
       const [inputValue, setInputValue] = useState('');
+      
+
+      useEffect(() => {
+        const listener = event => {
+          if (event.code === 'Enter') {
+            onSubmit();
+          }
+        };
+        document.addEventListener("keydown", listener);
+        return () => {
+          document.removeEventListener("keydown", listener);
+        };
+      });
 
     const onSubmit = () => {
         console.log(inputValue);
@@ -49,14 +61,14 @@ const useStyles = makeStyles((theme) => ({
 
       return (
         <Grid container direction = 'row'>
-            <Paper component="form" className={classes.root}>
+            <Paper className={classes.root}>
                 <InputBase
                 className={classes.input}
                 placeholder="Search for a restaurant by Name"
                 value = {inputValue}
                 onChange = {handleChange}
                 />
-                <SearchIcon onClick = {onSubmit} className = {classes.iconButton} />
+                <SearchIcon type = 'submit' onClick = {onSubmit} className = {classes.iconButton} />
             </Paper>
         </Grid>
 

@@ -21,7 +21,7 @@ const SearchResults = (props) => {
     const classes = useStyles();
     return (
         <Grid container direction = 'row'>
-            <Grid item><Typography variant='h5' className={classes.label}><Box fontWeight='bold' component = 'span' m = {1}>Search Results</Box><Link className = {classes.link} onClick = {props.resetSearch}> Clear Results </Link></Typography></Grid>
+            <Grid item><Typography variant='h5' className={classes.label}><Box fontWeight='bold' component = 'span' m = {1}>Search Results</Box></Typography><Link className = {classes.link} onClick = {props.resetSearch}> Clear Results </Link></Grid>
             <GridList cols = {props.columns} spacing = {100} cellHeight = 'auto'>
                 {props.children}
             </GridList>
