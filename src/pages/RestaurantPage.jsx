@@ -76,8 +76,7 @@ const RestaurantPage = (props) => {
                 }})
                 .then((res) => res.json())
                 .then((res) => {
-                    
-                  console.log(res);
+                  setIsRendered(true);
                   setName(res.name);
                   setFeaturedImage(res.featured_image);
                   setPriceRange(res.price_range);
@@ -87,9 +86,6 @@ const RestaurantPage = (props) => {
                   setNumReviews(res.all_reviews_count);
                   setHighlights(res.highlights);
                   setUserRating(res.user_rating);
-                  setIsRendered(true);
-
-    
                 },
                 (error) => {
                     console.log(error);
