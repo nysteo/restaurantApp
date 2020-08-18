@@ -8,7 +8,7 @@ import history from './history';
 import SearchResults from 'components/main/SearchResults';
 import  isWidthUp from '@material-ui/core/withWidth';
 import RestaurantMap from 'components/map/Map';
-import Loader from 'react-loader-spinner'
+import Loader from 'react-loader-spinner';
 
 
 const useStyles = makeStyles((theme) => ({

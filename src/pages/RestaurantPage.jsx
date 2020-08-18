@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {Grid, Fade, Button, makeStyles, Typography, Box} from '@material-ui/core';
 import exampleImage from 'images/example.jpeg';
 import StarIcon from '@material-ui/icons/Star';
+import Loader from 'react-loader-spinner'
 
 import history from '../history';
 
@@ -64,15 +65,6 @@ const RestaurantPage = (props) => {
         history.push('/');
     }
 
-    const renderMedia = () => {
-        return ( 
-        <Grid item xs={3}  style={{marginLeft: '1rem', marginTop: '1rem', height: '80vmin'}}>
-            <Grid container direction='column' spacing={0}>
-                <Grid item> <img className = {classes.media} alt = 'restaurant' src = {featuredImage}/></Grid>
-            </Grid>                        
-        </Grid>
-        )
-    }
     
     useEffect(()=> {    
         if(isRendered !== true){
@@ -84,7 +76,7 @@ const RestaurantPage = (props) => {
                 }})
                 .then((res) => res.json())
                 .then((res) => {
-                    setIsRendered(true);
+                    
                   console.log(res);
                   setName(res.name);
                   setFeaturedImage(res.featured_image);
@@ -95,6 +87,7 @@ const RestaurantPage = (props) => {
                   setNumReviews(res.all_reviews_count);
                   setHighlights(res.highlights);
                   setUserRating(res.user_rating);
+                  setIsRendered(true);
 
     
                 },
@@ -106,40 +99,61 @@ const RestaurantPage = (props) => {
 
 
     });
-    return (
-        <Fade in timeout = {4000}>
-            <div className = {classes.container}>
-                <Grid container direction = 'row' spacing = {0} justify = 'center' alignItems = 'stretch' alignContent = 'stretch'>
-                    <Grid item xs={12} md={6} lg={7} xl={7} style={{marginLeft: '1rem', marginTop: '1rem', height: '80vmin'}}>
-                        <Grid container direction='column' spacing={8}>
-                            <Grid item> 
-                                <img className = {classes.media} alt = 'restaurant' src = {featuredImage ? featuredImage : exampleImage}/>
-                            </Grid>    
-                            <Grid Item>
-                                <div className = {classes.descContainer}>
-                                    <Typography variant = 'h4'><Box fontWeight = 'bold' component = 'span' m = {1}>{name}</Box><Box fontWeight='bold' component = 'span' m = {1} className = {classes.highlight}><StarIcon/>{userRating.aggregate_rating}</Box> </Typography>
-                                    <Typography variant = 'h6'>Address: {address}</Typography>
-                                    <Typography cariant = 'h6'>Phone Number(s): {phoneNumber}</Typography>
-                                    <Typography variant = 'h6'>Cuisine: {cuisine}</Typography> 
-                                    <Typography variant = 'h6'>Price: {priceRange === 1 && ' $'}{priceRange === 2 && ' $$'}{priceRange === 3 && ' $$$'}{priceRange === 4 && ' $$$'}</Typography>
-                                    <Typography variant = 'h6'>Number of Reviews: {numReviews}</Typography>
-                                    <Typography variant = 'h6'> Highlights: </Typography>
-                                    <Grid container direction = 'row' spacing = {2}>
-                                        {highlights.map((select, index) => {
-                                            return <Grid item><Typography className = {classes.highlight}>{select}</Typography></Grid>
-                                        })}
-                                    </Grid>
-                                </div>
-                            </Grid>     
-                        </Grid>            
-                    </Grid>
-                </Grid>
-            </div>
-        </Fade>
+    if (isRendered){
+        return (
+            <Fade in timeout = {4000}>
+                <div className = {classes.container}>
+                    <Grid container direction = 'row' spacing = {0} justify = 'center' alignItems = 'stretch' alignContent = 'stretch'>
+                        <Grid item xs={12} md={6} lg={7} xl={7} style={{marginLeft: '1rem', marginTop: '1rem', height: '80vmin'}}>
+                            <Grid container direction='column' spacing={8}>
+                                <Grid item>
+                                    <Button variant="contained" onClick = {handleBack}> Back to Home </Button>    
+                                </Grid> 
+                                <Grid item> 
+                                    <img className = {classes.media} alt = 'restaurant' src = {featuredImage ? featuredImage : exampleImage}/>
+                                </Grid>    
+                                <Grid Item>
+                                    <div className = {classes.descContainer}>
+                                        <Typography variant = 'h4'><Box fontWeight = 'bold' component = 'span' m = {1}>{name}</Box><Box fontWeight='bold' component = 'span' m = {1} className = {classes.highlight}><StarIcon/>{userRating.aggregate_rating}</Box> </Typography>
+                                        <Typography variant = 'h6'>Address: {address}</Typography>
+                                        <Typography variant = 'h6'>Phone Number(s): {phoneNumber}</Typography>
+                                        <Typography variant = 'h6'>Cuisine: {cuisine}</Typography> 
+                                        <Typography variant = 'h6'>Price: <Box fontWeight = 'bold' component = 'span' m = {1} className = {classes.highlight}>{priceRange === 1 && ' $'}{priceRange === 2 && ' $$'}{priceRange === 3 && ' $$$'}{priceRange === 4 && ' $$$'}</Box></Typography>
+                                        <Typography variant = 'h6'>Number of Reviews: {numReviews}</Typography>
+                                        <Typography variant = 'h6'> Highlights: </Typography>
+                                        <Grid container direction = 'row' spacing = {2}>
+                                            {highlights.map((select, index) => {
+                                                return <Grid item><Typography className = {classes.highlight}>{select}</Typography></Grid>
+                                            })}
+                                        </Grid>
 
-        
-        
-    );
+                                    </div>
+                                </Grid>     
+                            </Grid>            
+                        </Grid>
+                    </Grid>
+                </div>
+            </Fade>
+    
+            
+            
+        );
+
+    }else {
+        return(
+            <Loader
+              style = {{position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)"}}
+              type="ThreeDots"
+              color="#FECC2A"
+              height={100}
+              width={100}//3 secs
+      
+            />
+    
+    
+         );
+      }
+
     
 
 }
